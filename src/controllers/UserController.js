@@ -36,8 +36,50 @@ class UserController{
       res.status(200).json(users);
     }catch(e){
       res.json(e.message);
+    };
+  };
+
+  //update
+  async update(req, res){
+    try{
+      const pkUser = req.query.pk;
+      if(!pkUser)
+        return res.status(400).json("É necessário informar um ID para atualização");
+
+      const user = await User.findByPk(pkUser);
+      if(!user)
+        return res.status(400).json(`Nenhum usuário localizado com o id ${pkUser}`);
+
+      user.nome = req.body.nome;
+      user.email = req.body.email;
+      user.save();
+
+      return res.status(200).json(user);
+
+    }catch(e){
+      res.status(400).json(e.errors);
+    };
+  };
+
+  //delete
+  async deleteUser(req, res){
+    try{
+      const userId = req.body.pk;
+      if(!userId) return res.status(400).json({errors:["E necessário enviar um userId."]});
+
+      const user = await User.findByPk(userId);
+      if(!user) return res.status(404).json({errors: ("Não foi localizado usuários com o id informado.")});
+
+      await user.destroy()
+        .then(() => res.status(200).json({success:["Usuário exlcuido com sucesso."]}))
+        .catch(() => res.status(500).json({errors: ["Não foi possivel completar a solicitação. Tente novamente."]}) );
+
+
+    }catch(e){
+      res.status(500).json({errors:["Não foi possivel completar a solicitação. Tente novamente."]});
+      console.log(e);
     }
-  }
+  };
 };
 
 export default new UserController();
