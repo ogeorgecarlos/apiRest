@@ -36,8 +36,30 @@ class UserController{
       res.status(200).json(users);
     }catch(e){
       res.json(e.message);
-    }
-  }
+    };
+  };
+
+  //update
+  async update(req, res){
+    try{
+      const pkUser = req.query.pk;
+      if(!pkUser)
+        return res.status(400).json("É necessário informar um ID para atualização");
+
+      const user = await User.findByPk(pkUser);
+      if(!user)
+        return res.status(400).json(`Nenhum usuário localizado com o id ${pkUser}`);
+
+      user.nome = req.body.nome;
+      user.email = req.body.email;
+      user.save();
+
+      return res.status(200).json(user);
+
+    }catch(e){
+      res.status(400).json(e.errors);
+    };
+  };
 };
 
 export default new UserController();
