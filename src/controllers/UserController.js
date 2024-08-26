@@ -27,6 +27,17 @@ class UserController{
 
     }
   };
+
+
+  //read all
+  async readAll(req, res){
+    try{
+      const users = await User.findAll();
+      res.status(200).json(users);
+    }catch(e){
+      res.json(e.message);
+    }
+  }
 };
 
 export default new UserController();
