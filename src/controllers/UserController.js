@@ -27,7 +27,7 @@ class UserController{
   }
 
   //read one
-  async index(req, res){
+  async show(req, res){
     try{
       const emailUser = req.query.email;
 
@@ -49,7 +49,7 @@ class UserController{
 
 
   //read all
-  async readAll(req, res){
+  async index(req, res){
     try{
       const users = await User.findAll();
       res.status(200).json(users);
@@ -81,7 +81,7 @@ class UserController{
   };
 
   //delete
-  async deleteUser(req, res){
+  async delete(req, res){
     try{
       const userId = req.body.pk;
       if(!userId) return res.status(412).json({errors:["E necessário enviar um userId."]});
