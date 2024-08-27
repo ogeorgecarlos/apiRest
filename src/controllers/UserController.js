@@ -7,8 +7,6 @@ class UserController{
     try{
       const body = req.body;
 
-      console.log(JSON.parse(req.body));
-
       if(!req.body) return res.status(412).json({errors: ["É necessário enviar dados para icnlusão do usuário"]});
 
       User.create(body)
@@ -23,21 +21,28 @@ class UserController{
     }catch(e){
       if(e.message.endsWith("is not valid JSON"))
         return res.status(401).json({error:["O objeto enviado deve estar no formato JSON"]});
-      
-      res.status(400).json("Não foi possivel processar a solicitação. Tente Novamente.");
+
+      res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
     };
   }
 
   //read one
   async index(req, res){
     try{
-      const emailreq = req.query.email ?? "";
-      const user = await User.findOne({where:{email: emailreq}});
-      if(user) return res.status(200).json(user);
-      return res.status(200).json({errors: "Usuário não localizado"});
+      const emailUser = req.query.email;
+
+      if(!emailUser) return res.status(412).json({errors: ["É necessário enviar um email para consulta."]})
+
+      const user = await User.findOne({where:{email: emailUser}});
+
+      if(!user) return res.status(404).json({success:"Usuário não localizado"});
+      return res.status(200).json(user);
 
     }catch(e){
-      res.status(400).json("Não foi possivel completar a solicitação. Tente novamente." + e.name);
+      if(e.message.endsWith("is not valid JSON"))
+        return res.status(401).json({error:["O objeto enviado deve estar no formato JSON"]});
+
+      res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
 
     }
   };
@@ -49,7 +54,7 @@ class UserController{
       const users = await User.findAll();
       res.status(200).json(users);
     }catch(e){
-      res.json(e.message);
+      res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
     };
   };
 
