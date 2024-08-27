@@ -63,20 +63,20 @@ class UserController{
     try{
       const pkUser = req.query.pk;
       if(!pkUser)
-        return res.status(400).json("É necessário informar um ID para atualização");
+        return res.status(412).json("É necessário informar um ID para atualização");
 
       const user = await User.findByPk(pkUser);
       if(!user)
-        return res.status(400).json(`Nenhum usuário localizado com o id ${pkUser}`);
+        return res.status(404).json(`Nenhum usuário localizado com o id ${pkUser}`);
 
       user.nome = req.body.nome;
       user.email = req.body.email;
       user.save();
 
-      return res.status(200).json(user);
+      return res.status(201).json({success:[user]});
 
     }catch(e){
-      res.status(400).json(e.errors);
+      res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
     };
   };
 
@@ -95,10 +95,7 @@ class UserController{
 
 
     }catch(e){
-
-      //teste
       res.status(500).json({errors:["Não foi possivel completar a solicitação. Tente novamente."]});
-      console.log(e);
     }
   };
 };
