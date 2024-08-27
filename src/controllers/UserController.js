@@ -5,12 +5,26 @@ class UserController{
   //create
   async store(req, res){
     try{
-      const body = req.body ?? JSON.parse({"":""});
-      const novoUser = await User.create(body);
-      res.json(novoUser);
+      const body = req.body;
+
+      console.log(JSON.parse(req.body));
+
+      if(!req.body) return res.status(412).json({errors: ["É necessário enviar dados para icnlusão do usuário"]});
+
+      User.create(body)
+        .then((result) =>res.status(201).json({success: ["Usuário criado com sucesso." + result]}))
+        .catch( (result) => {
+          const errors = [];
+          result.errors.forEach(e=> errors.push(e.message));
+          res.status(400).json({errors: errors});
+        });
+
+
     }catch(e){
-      if(e.name === "SequelizeValidationError") //Precisa validar quando o usuario envia um formato diferente de json
-        return res.status(400).json({errors: `erro de envio tente novamente: ${e.errors.map(err => err.message)}`});
+      if(e.message.endsWith("is not valid JSON"))
+        return res.status(401).json({error:["O objeto enviado deve estar no formato JSON"]});
+      
+      res.status(400).json("Não foi possivel processar a solicitação. Tente Novamente.");
     };
   }
 
