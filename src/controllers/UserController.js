@@ -10,7 +10,7 @@ class UserController{
       if(!req.body) return res.status(412).json({errors: ["É necessário enviar dados para icnlusão do usuário"]});
 
       User.create(body)
-        .then((result) =>res.status(201).json({success: ["Usuário criado com sucesso." + result]}))
+        .then((result) =>res.status(201).json({success: ["Usuário criado com sucesso."]}))
         .catch( (result) => {
           const errors = [];
           result.errors.forEach(e=> errors.push(e.message));
