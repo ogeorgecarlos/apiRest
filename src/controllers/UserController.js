@@ -29,13 +29,13 @@ class UserController{
   //read one
   async show(req, res){
     try{
-      const emailUser = req.query.email;
+      const emailUser = req.body.email;
 
       if(!emailUser) return res.status(412).json({errors: ["É necessário enviar um email para consulta."]});
 
       const user = await User.findOne({where:{email: emailUser}});
 
-      if(!user) return res.status(404).json({success:"Usuário não localizado"});
+      if(!user) return res.status(404).json({errors:"Usuário não localizado"});
       return res.status(200).json(user);
 
     }catch(e){
@@ -61,19 +61,27 @@ class UserController{
   //update
   async update(req, res){
     try{
-      const pkUser = req.query.pk;
-      if(!pkUser)
-        return res.status(412).json("É necessário informar um ID para atualização");
+      // const pkUser = req.query.pk;
+      // if(!pkUser)
+      //   return res.status(412).json("É necessário informar um ID para atualização");
 
-      const user = await User.findByPk(pkUser);
+      const body = req.body;
+      if(!body) return res.status(412).json({errros:["É necessário enviar dados para prosseguir com a solicitação"]});
+
+      const {novoNome, novoEmail, novoPassword} = req.body;
+      if(!novoNome && !novoEmail && !novoPassword) return res.status(412).json({erros:["Não foram enviados dados para alteração."]});
+
+      const email = req.email;
+      const user = await User.findOne({where:{email}});
       if(!user)
-        return res.status(404).json(`Nenhum usuário localizado com o id ${pkUser}`);
+        return res.status(404).json(`Nenhum usuário localizado com o email ${req.email}`);
 
-      user.nome = req.body.nome;
-      user.email = req.body.email;
+      user.nome = req.body.novoNome || user.nome;
+      user.email = req.body.novoEmail || req.body.email;
+      user.password = req.body.novoPassword || req.body.password;
       user.save();
 
-      return res.status(201).json({success:[user]});
+      return res.status(201).json({success: ["User atualizado com sucesso"]});
 
     }catch{
       res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
@@ -83,7 +91,7 @@ class UserController{
   //delete
   async delete(req, res){
     try{
-      const userId = req.body.pk;
+      const userId = req.id;
       if(!userId) return res.status(412).json({errors:["E necessário enviar um userId."]});
 
       const user = await User.findByPk(userId);
