@@ -30,7 +30,28 @@ class TokenController{
 
       res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
     }
-  }
+  };
+
+  async checkToken(req, res, next){
+    try{
+      //codigo
+      const hasAuthheader = req.rawHeaders.some(e => e === "autorizathion");
+      if(!hasAuthheader) return res.status(401).json({errors:[`É necessario o envio do token no header "autorizathion"`]});
+
+      const token = req.rawHeaders[req.rawHeaders.findIndex(e => e === "autorizathion") +1];
+      if(!token) return res.status(401).json({errors:[`É necessario o envio do token no header "autorizathion"`]});
+
+      jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded)=>{
+        if(err) return res.status(401).json({errors:[`O token enviado não é valido`]});
+        next();
+      });
+    }catch(e){
+      if(e.message.endsWith("is not valid JSON"))
+        return res.status(401).json({error:["O objeto enviado deve estar no formato JSON"]});
+
+      res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
+    }
+  };
 };
 
 export default new TokenController();
