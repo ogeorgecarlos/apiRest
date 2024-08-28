@@ -10,7 +10,7 @@ class UserController{
       if(!req.body) return res.status(412).json({errors: ["É necessário enviar dados para icnlusão do usuário"]});
 
       User.create(body)
-        .then((result) =>res.status(201).json({success: ["Usuário criado com sucesso."]}))
+        .then(() =>res.status(201).json({success: ["Usuário criado com sucesso."]}))
         .catch( (result) => {
           const errors = [];
           result.errors.forEach(e=> errors.push(e.message));
@@ -31,7 +31,7 @@ class UserController{
     try{
       const emailUser = req.query.email;
 
-      if(!emailUser) return res.status(412).json({errors: ["É necessário enviar um email para consulta."]})
+      if(!emailUser) return res.status(412).json({errors: ["É necessário enviar um email para consulta."]});
 
       const user = await User.findOne({where:{email: emailUser}});
 
@@ -53,7 +53,7 @@ class UserController{
     try{
       const users = await User.findAll();
       res.status(200).json(users);
-    }catch(e){
+    }catch{
       res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
     };
   };
@@ -75,7 +75,7 @@ class UserController{
 
       return res.status(201).json({success:[user]});
 
-    }catch(e){
+    }catch{
       res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
     };
   };
@@ -94,7 +94,7 @@ class UserController{
         .catch(() => res.status(500).json({errors: ["Não foi possivel completar a solicitação. Tente novamente."]}) );
 
 
-    }catch(e){
+    }catch{
       res.status(500).json({errors:["Não foi possivel completar a solicitação. Tente novamente."]});
     }
   };

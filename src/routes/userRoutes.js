@@ -5,9 +5,9 @@ import requireEmailPassword from "../midllewares/requireEmailPassword";
 const router = new express.Router();
 
 router.get("/get", requireEmailPassword, userController.show);
-router.get("/get-all", userController.index);
-router.put("/update", userController.update);
+router.get("/get-all", requireEmailPassword, userController.index);
+router.put("/update", requireEmailPassword, userController.update);
 router.post("/create", userController.store);
-router.delete("/delete", userController.delete);
+router.delete("/delete", requireEmailPassword, userController.delete);
 
 export default router;
