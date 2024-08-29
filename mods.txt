@@ -1,0 +1,9 @@
+ok - verificar se as informacoes do payload do token são as mesmas do login do usuario
+ok - limitar informacoes exibidas nas requisicoes
+ok - criar funcoes para gerar erros e sucess padrao
+ok - aplicar mensagem padrao de erros e sucessos a todos o controlerrs e models
+corrigir locais de autenticadores e header no insomnia
+incluir tipo de permissao nos usuarios
+incluir tio de permissao no token do usuario
+limitar exibicao de lista de usuarios a admnistrador
+ao atualizar, revogar token e gerar novo token para o usuario
