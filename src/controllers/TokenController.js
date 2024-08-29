@@ -20,7 +20,7 @@ class TokenController{
       const passwordIsValid = await bcrypt.compare(password, dbPassword);
       if(!passwordIsValid) return res.status(401).json({errors:[`A senha fornecida está incorreta.`]});
 
-      const token = jwt.sign({id, email}, process.env.TOKEN_SECRET,{expiresIn: process.env.TOKEN_EXPIRATION});
+      const token = jwt.sign({idUser:req.id, mailUser:req.email}, process.env.TOKEN_SECRET,{expiresIn: process.env.TOKEN_EXPIRATION});
 
 
       res.status(201).json({token});
@@ -40,6 +40,9 @@ class TokenController{
 
       const token = req.rawHeaders[req.rawHeaders.findIndex(e => e === "autorizathion") +1];
       if(!token) return res.status(401).json({errors:[`É necessario o envio do token no header "autorizathion"`]});
+
+      const payload = jwt.decode(token);
+      console.log("payload", payload);
 
       jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded)=>{
         if(err) return res.status(401).json({errors:[`O token enviado não é valido`]});
