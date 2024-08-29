@@ -9,7 +9,7 @@ class TokenController{
       const body = req.body;
       if(!body) return res.status(412).json({errors: ["É necessario o envio de credenciais para gerar token de acesso"]});
 
-      const {id, email = "", password = ""} = body;
+      const {email = "", password = ""} = body;
 
       const user = await User.findOne({where:{email}});
       if(!user) return res.status(404).json({errors:[`Usuário não localizado com o e-mail ${email}`]});

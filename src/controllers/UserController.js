@@ -33,7 +33,7 @@ class UserController{
 
       if(!emailUser) return res.status(412).json({errors: ["É necessário enviar um email para consulta."]});
 
-      const user = await User.findOne({where:{email: emailUser}});
+      const user = await User.findOne({where:{email: emailUser}, attributes:["id", "nome", "email"]});
 
       if(!user) return res.status(404).json({errors:"Usuário não localizado"});
       return res.status(200).json(user);
