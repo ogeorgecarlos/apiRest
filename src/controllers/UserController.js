@@ -61,9 +61,6 @@ class UserController{
   //update
   async update(req, res){
     try{
-      // const pkUser = req.query.pk;
-      // if(!pkUser)
-      //   return res.status(412).json("É necessário informar um ID para atualização");
 
       const body = req.body;
       if(!body) return res.status(412).json({errros:["É necessário enviar dados para prosseguir com a solicitação"]});
