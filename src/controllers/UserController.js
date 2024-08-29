@@ -51,7 +51,7 @@ class UserController{
   //read all
   async index(req, res){
     try{
-      const users = await User.findAll();
+      const users = await User.findAll({attributes: ["id", "nome", "email"]});
       res.status(200).json(users);
     }catch{
       res.status(500).json("Não foi possivel processar a solicitação. Tente Novamente.");
