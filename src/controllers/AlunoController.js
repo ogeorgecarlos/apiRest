@@ -31,7 +31,6 @@ class AlunosController {
     }
   };
 
-  //store
   async store(req, res){
     try{
       const body = req.body;
@@ -53,6 +52,31 @@ class AlunosController {
   }
 
   //update
+  async update(req,res){
+    try{
+      const alunoMail = req.query.email;
+      if(!alunoMail) return res.status(412).json(error("É necessário informar o email atual do aluno que deseja atualizar."))
+
+      const aluno = await Aluno.findOne({where:{email: alunoMail}});
+      if(!aluno) return res.status(404).json(error("Não foi localizado aluno para o email informado."));
+
+      const body = req.body;
+      if(!body) return res.status(412).json(error("É necessário enviar dados para criação de um novo aluno"));
+
+      const {nome, sobrenome, email, idade, peso, altura} = body;
+      //melhorar essa avaliacao
+      if(!nome || !sobrenome || !email || !idade || !peso || !altura)
+        return res.status(412).json(error("É necessario preencher todos os dados para criação de um novo aluno"));
+
+      const alunoUpdated = await aluno.update(body);
+      if(!alunoUpdated) return res.status(500).json(error("Algo correu mal. Tente novamente."));
+
+      res.status(200).json(success("Adicionado com sucesso"));
+    }catch{
+      res.status(500).json(error("Não foi possivel completar a solicitação. Tente novamente."));
+    }
+  }
+
   //delete
 
 }
