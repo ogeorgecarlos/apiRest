@@ -51,11 +51,10 @@ class AlunosController {
     }
   }
 
-  //update
   async update(req,res){
     try{
       const alunoMail = req.query.email;
-      if(!alunoMail) return res.status(412).json(error("É necessário informar o email atual do aluno que deseja atualizar."))
+      if(!alunoMail) return res.status(412).json(error("É necessário informar o email atual do aluno que deseja atualizar."));
 
       const aluno = await Aluno.findOne({where:{email: alunoMail}});
       if(!aluno) return res.status(404).json(error("Não foi localizado aluno para o email informado."));
@@ -78,7 +77,22 @@ class AlunosController {
   }
 
   //delete
+  async delete(req, res){
+    try{
+      const {email} = req.query;
+      if(!email) return res.status(412).json(error("É necessário informar o email atual do aluno que deseja atualizar."));
 
+      const aluno = await Aluno.findOne({where:{email}});
+      if(!aluno) return res.status(404).json(error("Não foi localizado aluno para o email informado."));
+
+      aluno.destroy()
+        .then(()=> res.status(200).json(success("Aluno excluido do banco de dados")))
+        .catch(() => res.status(500).json(error("Algo ocorreu mal. tente novamente.")));
+
+    }catch{
+      res.status(500).json(error("Não foi possivel completar a solicitação. Tente novamente."));
+    }
+  }
 }
 
 export default new AlunosController();
