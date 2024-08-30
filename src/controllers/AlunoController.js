@@ -1,7 +1,7 @@
 import Aluno from "../models/Aluno";
 import {error, success} from "../utils/error_success_func";
 
-export default class AlunosController {
+class AlunosController {
   //index
   async index(req, res){
     try{
@@ -20,3 +20,5 @@ export default class AlunosController {
   //delete
 
 }
+
+export default new AlunosController();
