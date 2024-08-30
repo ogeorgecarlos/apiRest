@@ -4,6 +4,7 @@ ok - criar funcoes para gerar erros e sucess padrao
 ok - aplicar mensagem padrao de erros e sucessos a todos o controlerrs e models
 corrigir locais de autenticadores e header no insomnia
 incluir tipo de permissao nos usuarios
-incluir tio de permissao no token do usuario
+incluir tipo de permissao no token do usuario
 limitar exibicao de lista de usuarios a admnistrador
 ao atualizar, revogar token e gerar novo token para o usuario
+criar um arquivo de log para erros inesperados. (que ficam no bloco try)
