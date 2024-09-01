@@ -3,7 +3,7 @@ import {error, success} from "../utils/error_success_func";
 class PicController{
   async store(req, res){
     try{
-      //console.log(req.file);
+      console.log(req.file);
       const file = req.file;
       if(!file) return res.status(412).json(error("Anexe um foto para realizar o upload."));
 

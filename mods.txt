@@ -2,9 +2,17 @@ ok - verificar se as informacoes do payload do token são as mesmas do login do 
 ok - limitar informacoes exibidas nas requisicoes
 ok - criar funcoes para gerar erros e sucess padrao
 ok - aplicar mensagem padrao de erros e sucessos a todos o controlerrs e models
+mudar single para o controller
+sanitizar entrada de fotos
+incluir requireCredentials na rota de fotos
+incluir token para post de fotos
+associar fotos postadas ao usuario que postou
 corrigir locais de autenticadores e header no insomnia
 incluir tipo de permissao nos usuarios
 incluir tipo de permissao no token do usuario
 limitar exibicao de lista de usuarios a admnistrador
 ao atualizar, revogar token e gerar novo token para o usuario
 criar um arquivo de log para erros inesperados. (que ficam no bloco try)
+incluir rota get para download de fotos
+verificar erro quando header para post de foto é diferente do esperado
+criar rotas para postar varias fotos
