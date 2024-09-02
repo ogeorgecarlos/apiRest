@@ -14,7 +14,13 @@ export default class Fotos extends Model{
       updated_at: Sequelize.DATE,
       aluno_id: Sequelize.INTEGER,
     },
-    {sequelize}
+    {
+      sequelize,
+    }
   );
+  }
+
+  static associate(models){
+    this.belongsTo(models.Aluno, {foreignKey: "aluno_id"});
   }
 }

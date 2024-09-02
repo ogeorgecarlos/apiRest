@@ -5,10 +5,10 @@ import Fotos from "../models/Fotos";
 class PicController{
   async store(req, res){
     try{
-      console.log("pic", req.file);
       const file = req.file;
       if(!file) return res.status(412).json(error("Anexe uma foto para realizar o upload."));
 
+      //dinamizar email , mas precisa incluir o requiere antes do controller foto
       const aluno = await Alunos.findOne({where:{email: "georgecarlos@live.com"}});
       const alunoId = aluno.id;
 
@@ -24,7 +24,7 @@ class PicController{
 
       //return res.status(201).json(success(`Arquivo "${file.originalname}" enviado com sucesso`));
     }catch(e){
-      console.log(e);
+      //console.log(e);
       return res.status(500).json(error("Erro inesperado no servidor"));
     }
   }

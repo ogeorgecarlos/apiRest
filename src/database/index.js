@@ -5,8 +5,10 @@ import Professor from "../models/professor";
 import User from "../models/user";
 import Fotos from "../models/Fotos";
 
+
 const models = [Aluno, Professor, User, Fotos];
 
 const connection = new Sequelize(databaseConfig);
 
 models.forEach(model => model.init(connection));
+models.forEach(model => model.associate && model.associate(connection.models));

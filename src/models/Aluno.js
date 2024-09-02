@@ -10,8 +10,14 @@ export default class Aluno extends Model {
       peso: Sequelize.FLOAT,
       altura: Sequelize.FLOAT
     },
-    {sequelize,}
+    {
+      sequelize,
+    }
   );
     return this;
+  }
+
+  static associate(models){
+    this.hasMany(models.Fotos), {foreignKey: "aluno_id"};
   }
 }
