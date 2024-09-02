@@ -29,7 +29,7 @@ class AlunosController {
       if(!email) return res.status(412).json(error("É necessário informar id ou Email do aluno que deseja consultar."));
 
       const alunoAttributes = ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"];
-      const fotoAttributes = ["file_name", "created_at"];
+      const fotoAttributes = ["url", "file_name", "created_at"];
       const aluno = await Aluno.findOne({
         where:{email: email},
         attributes: alunoAttributes,
