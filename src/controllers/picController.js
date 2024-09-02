@@ -5,9 +5,9 @@ import Fotos from "../models/Fotos";
 class PicController{
   async store(req, res){
     try{
-      console.log(req.file);
+      console.log("pic", req.file);
       const file = req.file;
-      if(!file) return res.status(412).json(error("Anexe um foto para realizar o upload."));
+      if(!file) return res.status(412).json(error("Anexe uma foto para realizar o upload."));
 
       const aluno = await Alunos.findOne({where:{email: "georgecarlos@live.com"}});
       const alunoId = aluno.id;
@@ -19,8 +19,8 @@ class PicController{
       };
 
       await Fotos.create(body)
-        .then(()=> res.json("foto adicionada"))
-        .catch(()=> res.json("foto não adicionada"));
+        .then(()=> res.json(success("foto adicionada")))
+        .catch(()=> res.json(error("foto não adicionada")));
 
       //return res.status(201).json(success(`Arquivo "${file.originalname}" enviado com sucesso`));
     }catch(e){

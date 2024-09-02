@@ -9,14 +9,14 @@ module.exports = {
   database: process.env.DATABASE,
   define: {
     timestamps: true,
-    underscored: true,
+    underscored: true, // o que é isso?
     underscoredAll: true,
     //ver se o bug que justifica as config abaixo ainda existe
     "createdAt": "created_at",
     "updatedAt": "updated_at"
   },
   dialectOptions: {
-    timezone: "America/Sao_paulo"
+    timezone: "America/Sao_paulo" //onde encontrar o correto para isso??
   },
   timezone: "America/Sao_paulo"
 };

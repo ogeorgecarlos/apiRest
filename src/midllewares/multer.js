@@ -7,7 +7,7 @@ import {resolve, extname} from "path";
 const randomNum = () => Math.floor(Math.random()*10000 + 10000);
 
 //Allowed pic types
-//const allowedTypes = ["image/jpg", "image.jpeg", "image/png"];
+const allowedTypes = ["image/jpg", "image/jpeg", "image/png"];
 
 const upload = multer({
 
@@ -19,13 +19,13 @@ const upload = multer({
       cb(null, Date.now()+"-"+randomNum()+extname(file.originalname));
     }
   }),
-
-  //talvez seja melhor tratar o erro no controller
-  // fileFilter:(req, file, cb) =>{
-  //   if(!allowedTypes.some(e=> e===file.mimetype))
-  //     cb(null, false);
-  //   return cb(new Error('Apenas imagens (png, jpg, jpeg) são permitidas!'));
-  // }
+  
+  fileFilter:(req, file, cb) =>{
+    if(allowedTypes.some(e=> e.toLowerCase()===file.mimetype.toLowerCase())){
+      return cb(null, true);
+    };
+    return cb(new Error('Apenas imagens (png, jpg, jpeg) são permitidas!'), false);
+  }
 });
 
 export default upload;
