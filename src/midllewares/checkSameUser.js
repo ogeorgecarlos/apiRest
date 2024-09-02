@@ -11,7 +11,7 @@ export default async function (req, res, next){
 
     next();
 
-  }catch(e){
-    console.log(e);
+  }catch{
+    //console.log(e);
   }
 }

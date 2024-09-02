@@ -12,8 +12,8 @@ class HomeController{
         altura: 1.80,
       });
       res.json(novoAluno);
-    }catch(e){
-      console.log(e.message);
+    }catch{
+      //console.log(e.message);
     };
   }
 }

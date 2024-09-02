@@ -17,8 +17,7 @@ class AlunosController {
       if(!alunos) return res.status(204).json(error("Não foi localizado alunos com as informações cedidas."));
 
       res.status(200).json(alunos);
-    }catch(e){
-      console.log(e);
+    }catch{
       res.status(500).json(error("Não foi possivel completar a solicitação. Tente novamente."));
     }
   };
@@ -27,7 +26,6 @@ class AlunosController {
   async show(req,res){
     try{
       const email = req.email;
-      console.log(email);
       if(!email) return res.status(412).json(error("É necessário informar id ou Email do aluno que deseja consultar."));
 
       const alunoAttributes = ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"];

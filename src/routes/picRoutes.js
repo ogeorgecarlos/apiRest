@@ -2,7 +2,6 @@ import {Router} from "express";
 import PicController from "../controllers/picController";
 import upload from "../midllewares/multer";
 import requireEmailPassword from "../midllewares/requireEmailPassword";
-import checkSameUser from "../midllewares/checkSameUser";
 import TokenController from "../controllers/TokenController";
 
 

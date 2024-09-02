@@ -9,7 +9,7 @@ class PicController{
       if(!file) return res.status(412).json(error("Anexe uma foto para realizar o upload."));
 
       const email = req.email;
-      if(!email) return res.status(412).json(error("É necessário e-mail para atualização de fotos."))
+      if(!email) return res.status(412).json(error("É necessário e-mail para atualização de fotos."));
 
       const aluno = await Alunos.findOne({where:{email}});
       const alunoId = aluno.id;
@@ -25,8 +25,7 @@ class PicController{
         .catch(()=> res.json(error("foto não adicionada")));
 
       //return res.status(201).json(success(`Arquivo "${file.originalname}" enviado com sucesso`));
-    }catch(e){
-      //console.log(e);
+    }catch{
       return res.status(500).json(error("Erro inesperado no servidor"));
     }
   }
