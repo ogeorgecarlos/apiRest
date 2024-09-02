@@ -3,12 +3,15 @@ ok - limitar informacoes exibidas nas requisicoes
 ok - criar funcoes para gerar erros e sucess padrao
 ok - aplicar mensagem padrao de erros e sucessos a todos o controlerrs e models
 ok - criar relacionamentos entre fotos e alunos
-criar variaveis de ambiente no insomnia;
+ok - criar variaveis de ambiente no insomnia;
+incluir confirmacao de senha ao criar um novo usuario ou aluno
+completar crud de fotos controller.
 inserir comentarios nas colunas dos models
 mudar single para o controller
 ok - sanitizar entrada de fotos
 incluir requireCredentials na rota de fotos
 incluir token para post de fotos
+incluir "sameuser" para controller de fotos
 ok - associar fotos postadas ao usuario que postou
 corrigir locais de autenticadores e header no insomnia
 incluir tipo de permissao nos usuarios

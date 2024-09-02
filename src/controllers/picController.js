@@ -8,8 +8,10 @@ class PicController{
       const file = req.file;
       if(!file) return res.status(412).json(error("Anexe uma foto para realizar o upload."));
 
-      //dinamizar email , mas precisa incluir o requiere antes do controller foto
-      const aluno = await Alunos.findOne({where:{email: "georgecarlos@live.com"}});
+      const email = req.email;
+      if(!email) return res.status(412).json(error("É necessário e-mail para atualização de fotos."))
+
+      const aluno = await Alunos.findOne({where:{email}});
       const alunoId = aluno.id;
 
       const body = {

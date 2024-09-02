@@ -26,13 +26,14 @@ class AlunosController {
   //show
   async show(req,res){
     try{
-      const {email} = req.query;
+      const email = req.email;
+      console.log(email);
       if(!email) return res.status(412).json(error("É necessário informar id ou Email do aluno que deseja consultar."));
 
       const alunoAttributes = ["id", "nome", "sobrenome", "email", "idade", "peso", "altura"];
       const fotoAttributes = ["file_name", "created_at"];
       const aluno = await Aluno.findOne({
-        where:{email},
+        where:{email: email},
         attributes: alunoAttributes,
         order: [["id","ASC"], [Foto, "created_at", "DESC"]],
         include:{
@@ -71,14 +72,14 @@ class AlunosController {
 
   async update(req,res){
     try{
-      const alunoMail = req.query.email;
+      const alunoMail = req.email;
       if(!alunoMail) return res.status(412).json(error("É necessário informar o email atual do aluno que deseja atualizar."));
 
       const aluno = await Aluno.findOne({where:{email: alunoMail}});
       if(!aluno) return res.status(404).json(error("Não foi localizado aluno para o email informado."));
 
       const body = req.body;
-      if(!body) return res.status(412).json(error("É necessário enviar dados para criação de um novo aluno"));
+      if(!body) return res.status(412).json(error("É necessário enviar dados para atualização do registro"));
 
       const {nome, sobrenome, email, idade, peso, altura} = body;
       //melhorar essa avaliacao
