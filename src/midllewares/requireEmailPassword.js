@@ -1,13 +1,12 @@
-import User from "../models/user";
 const bcrypt = require("bcryptjs");
+import basicAuth from "basic-auth";
 import {error} from "../utils/error_success_func";
+import User from "../models/user";
 
 export default async function (req, res, next){
-  const body = req.body;
-  if(!body) return res.status(404).json(error("Para login,é necessario enviar email e senha."));
-
-  const {email, password} = body;
-  if(!email || !password) return res.status(412).json(error("Para login,é necessario enviar email e senha."));
+  const auth = basicAuth(req);
+  const {name:email, pass:password} = auth;
+  if(!email || !password) return res.status(404).json(error("Para login,é necessario enviar email e senha."));
 
   const user = await User.findOne({where:{email}});
   if(!user) return res.status(401).json(error(`Email "${email}" não localizado.`));

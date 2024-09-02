@@ -2,6 +2,7 @@ ok - verificar se as informacoes do payload do token são as mesmas do login do 
 ok - limitar informacoes exibidas nas requisicoes
 ok - criar funcoes para gerar erros e sucess padrao
 ok - aplicar mensagem padrao de erros e sucessos a todos o controlerrs e models
+ok - criar relacionamentos entre fotos e alunos
 criar variaveis de ambiente no insomnia;
 inserir comentarios nas colunas dos models
 mudar single para o controller
