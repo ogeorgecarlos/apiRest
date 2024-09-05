@@ -1,8 +1,11 @@
 const {resolve} = require("path")
 
+
+//runTime configuration
+//Arquivo que o runtime ira procurar na raiz do projeto como base de funcionamento.
 module.exports = {
-  config: resolve(__dirname, "src", "config", "database.js"),
-  "models-path": resolve(__dirname, "src", "database", "models"),
-  "migrations-path": resolve(__dirname, "src", "database", "migrations"),
-  "seeders-path": resolve(__dirname, "src", "database", "seeds")
+  config: resolve(__dirname, "src", "config", "database.js"), //define as configurações padrão. Nesse caso  o objeto de confiuração esta em outro arquivo
+  "models-path": resolve(__dirname, "src", "database", "models"), //Indica o caminho para o diretorio de models
+  "migrations-path": resolve(__dirname, "src", "database", "migrations"), //Indica o caminho para o diretorio de migrations
+  "seeders-path": resolve(__dirname, "src", "database", "seeds") //Indica o caminho para o diretorio de seeders
 };

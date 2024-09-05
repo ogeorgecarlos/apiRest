@@ -6,6 +6,8 @@ ok - criar relacionamentos entre fotos e alunos
 ok - criar variaveis de ambiente no insomnia;
 incluir confirmacao de senha ao criar um novo usuario ou aluno
 completar crud de fotos controller.
+criar delete
+criar download
 inserir comentarios nas colunas dos models
 mudar single para o controller
 ok - sanitizar entrada de fotos

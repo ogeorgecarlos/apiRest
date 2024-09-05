@@ -1,3 +1,5 @@
+import path from "path";
+
 import {error, success} from "../utils/error_success_func";
 import Alunos from "../models/Aluno";
 import Fotos from "../models/Fotos";
@@ -28,6 +30,20 @@ class PicController{
     }catch{
       return res.status(500).json(error("Erro inesperado no servidor"));
     }
+  }
+
+  async download(req, res){
+    try{
+      const {file_name} = req.params;
+      if(!file_name) return res.status(412).json(error("Enter the file name to download"));
+
+      const caminho = path.resolve(__dirname, "..","uploads", "images", file_name);
+      res.attachment(caminho);
+      return res.sendFile(caminho);
+      //return res.status(200).json(success("Download's done!"));}
+    }catch{
+      //console.log(e);
+    };
   }
 }
 
