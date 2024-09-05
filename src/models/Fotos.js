@@ -1,4 +1,5 @@
 import Sequelize, {Model} from "sequelize";
+import appConfig from "../config/appConfig";
 
 export default class Fotos extends Model{
   static init(sequelize){
@@ -13,7 +14,7 @@ export default class Fotos extends Model{
       url:{
         type: Sequelize.VIRTUAL,
         get() {
-          return `http://localhost:3001/images/${this.getDataValue("file_name")}`;
+          return `${appConfig.urlProd}/images/${this.getDataValue("file_name")}`;
         }
       },
       created_at: Sequelize.DATE,
