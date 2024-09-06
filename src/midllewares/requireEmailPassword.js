@@ -23,8 +23,7 @@ export default async function (req, res, next){
     req.id = user.id;
 
     next();
-  }catch(e){
-    console.log(e);
+  }catch{
     return res.status(500).json(error("erro ao processar solicitação. tente novamente mais tarde."));
   }
 };
