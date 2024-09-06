@@ -7,15 +7,17 @@ class UserController{
   async store(req, res){
     try{
       const body = req.body;
+      if(!body) return res.status(412).json(_error_success_func.error.call(void 0, "É necessário enviar dados para inclusão do usuário"));
 
-      if(!req.body) return res.status(412).json(_error_success_func.error.call(void 0, "É necessário enviar dados para icnlusão do usuário"));
+      const {email} = body;
+      if(!email) res.status(412).json(_error_success_func.error.call(void 0, "Informe o email que deseja cadastrar na base de dados."));
+      const userExists = await _user2.default.findOne({where:{email}});
+      if(userExists) return res.status(404).json(_error_success_func.error.call(void 0, "usuario já existe."));
 
       _user2.default.create(body)
         .then(() =>res.status(201).json(_error_success_func.success.call(void 0, "Usuário criado com sucesso.")))
-        .catch( (result) => {
-          const errors = [];
-          result.errors.forEach(e=> errors.push(e.message));
-          res.status(400).json({errors: errors});
+        .catch( () => {
+          res.status(500).json(_error_success_func.error.call(void 0, `Não foi possivel realizar a aoperação`));
         });
 
 
@@ -30,7 +32,7 @@ class UserController{
   //read one
   async show(req, res){
     try{
-      const emailUser = req.body.email;
+      const emailUser = req.email;
 
       if(!emailUser) return res.status(412).json(_error_success_func.error.call(void 0, "É necessário enviar um email para consulta."));
 
@@ -48,8 +50,6 @@ class UserController{
     }
   };
 
-
-  //read all
   async index(req, res){
     try{
       const users = await _user2.default.findAll({attributes: ["id", "nome", "email"]});
@@ -86,7 +86,6 @@ class UserController{
     };
   };
 
-  //delete
   async delete(req, res){
     try{
       const userId = req.id;

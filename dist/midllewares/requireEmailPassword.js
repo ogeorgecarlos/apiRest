@@ -23,8 +23,7 @@ exports. default = async function (req, res, next){
     req.id = user.id;
 
     next();
-  }catch(e){
-    console.log(e);
+  }catch (e){
     return res.status(500).json(_error_success_func.error.call(void 0, "erro ao processar solicitação. tente novamente mais tarde."));
   }
 };
